@@ -30,8 +30,8 @@ Resources:
         Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 8080
-          ToPort: 8080
+          FromPort: 80
+          ToPort: 80
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
           FromPort: 22
@@ -51,8 +51,10 @@ Resources:
           sudo apt-get update -y
           sudo apt-get install apache2 -y
           sudo systemctl start apache2.service
+          cd /var/www/html
+          echo "it works! Udagram, Udacity!" > index.html
       ImageId: ami-00ddb0e5626798373
-      # KeyName: nd9990_keypair
+      KeyName: VocareumKey2
       SecurityGroups:
         - Ref: WebServerSecGroup
       InstanceType: t3.medium
@@ -109,7 +111,7 @@ Resources:
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 8
       HealthyThresholdCount: 2
-      Port: 8080
+      Port: 80
       Protocol: HTTP
       UnhealthyThresholdCount: 5
       VpcId:
